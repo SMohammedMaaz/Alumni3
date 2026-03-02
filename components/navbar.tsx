@@ -36,8 +36,8 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/95 shadow-sm backdrop-blur-xl py-2"
-          : "bg-transparent py-4"
+          ? "bg-background/95 shadow-md backdrop-blur-xl py-2"
+          : "bg-gradient-to-b from-black/60 via-black/30 to-transparent py-4"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6">
@@ -50,10 +50,10 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
             height={40}
           />
           <div className="flex flex-col">
-            <span className={`text-lg font-bold tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-primary-foreground"}`}>
+            <span className={`text-lg font-bold tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"}`}>
               VVIET Alumni
             </span>
-            <span className={`-mt-1 text-[10px] font-medium tracking-[0.2em] uppercase transition-colors duration-300 ${scrolled ? "text-muted-foreground" : "text-primary-foreground/60"}`}>
+            <span className={`-mt-1 text-[10px] font-medium tracking-[0.2em] uppercase transition-colors duration-300 ${scrolled ? "text-muted-foreground" : "text-white/70 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]"}`}>
               Network
             </span>
           </div>
@@ -65,10 +65,10 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
             <a
               key={link.href}
               href={link.href}
-              className={`relative rounded-lg px-3 py-2 text-[13px] font-medium transition-all duration-200 ${
+              className={`relative rounded-lg px-3 py-2 text-[13px] font-semibold transition-all duration-200 ${
                 scrolled
                   ? "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  : "text-primary-foreground/75 hover:text-primary-foreground hover:bg-primary-foreground/10"
+                  : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] hover:text-white hover:bg-white/15"
               }`}
             >
               {link.label}
@@ -79,7 +79,7 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
         <div className="hidden items-center gap-3 lg:flex">
           {isLoggedIn ? (
             <div className="flex items-center gap-3">
-              <div className={`flex items-center gap-2 rounded-lg px-3 py-2 ${scrolled ? "text-foreground" : "text-primary-foreground"}`}>
+              <div className={`flex items-center gap-2 rounded-lg px-3 py-2 ${scrolled ? "text-foreground" : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"}`}>
                 <UserCircle className="h-5 w-5" />
                 <span className="text-sm font-medium">{userName}</span>
               </div>
@@ -88,7 +88,7 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
                 className={`flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${
                   scrolled
                     ? "border border-border text-foreground hover:bg-muted"
-                    : "border border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                    : "border border-white/40 text-white hover:bg-white/15 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]"
                 }`}
               >
                 <LogOut className="h-4 w-4" />
@@ -101,7 +101,7 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
               className={`flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
                 scrolled
                   ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                  : "bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+                  : "bg-white text-[#3730a3] shadow-lg hover:bg-white/95 hover:shadow-xl"
               }`}
             >
               <LogIn className="h-4 w-4" />
@@ -114,7 +114,7 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className={`rounded-lg p-2 transition-colors lg:hidden ${
-            scrolled ? "text-foreground hover:bg-muted" : "text-primary-foreground hover:bg-primary-foreground/10"
+            scrolled ? "text-foreground hover:bg-muted" : "text-white hover:bg-white/15"
           }`}
           aria-label="Toggle navigation menu"
         >
@@ -122,17 +122,13 @@ export function Navbar({ onAuthOpen, isLoggedIn, userName, onLogout }: NavbarPro
         </button>
       </nav>
 
-      {/* Elegant thin divider line */}
-      <div
-        className={`mx-auto mt-2 max-w-7xl transition-opacity duration-500 ${
-          scrolled ? "opacity-100" : "opacity-40"
-        }`}
-      >
+      {/* Divider line */}
+      <div className="mx-auto mt-2 max-w-7xl">
         <div
-          className={`mx-6 h-px ${
+          className={`mx-6 transition-all duration-500 ${
             scrolled
-              ? "bg-border"
-              : "bg-gradient-to-r from-transparent via-primary-foreground/25 to-transparent"
+              ? "h-px bg-border"
+              : "h-[2px] bg-gradient-to-r from-transparent via-white/40 to-transparent"
           }`}
         />
       </div>
