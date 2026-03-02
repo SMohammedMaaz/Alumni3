@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef, useCallback } from "react"
+import { useEffect, useState, useRef, useCallback, useMemo } from "react"
 import { ArrowRight, Users, Briefcase, GraduationCap, Award, Sparkles } from "lucide-react"
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -38,21 +38,39 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
   )
 }
 
-/* Floating particles that drift gently across the hero */
+/* Floating particles - generated client-side only to avoid hydration mismatch */
 function FloatingParticles() {
+  const [mounted, setMounted] = useState(false)
+  const particles = useMemo(() => {
+    if (typeof window === "undefined") return []
+    return Array.from({ length: 20 }).map((_, i) => ({
+      id: i,
+      width: Math.random() * 4 + 2,
+      height: Math.random() * 4 + 2,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 8,
+      duration: Math.random() * 10 + 12,
+    }))
+  }, [])
+
+  useEffect(() => { setMounted(true) }, [])
+
+  if (!mounted) return null
+
   return (
     <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden="true">
-      {Array.from({ length: 20 }).map((_, i) => (
+      {particles.map((p) => (
         <div
-          key={i}
+          key={p.id}
           className="floating-particle absolute rounded-full bg-white/20"
           style={{
-            width: `${Math.random() * 4 + 2}px`,
-            height: `${Math.random() * 4 + 2}px`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 8}s`,
-            animationDuration: `${Math.random() * 10 + 12}s`,
+            width: `${p.width}px`,
+            height: `${p.height}px`,
+            left: `${p.left}%`,
+            top: `${p.top}%`,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
           }}
         />
       ))}
@@ -95,16 +113,16 @@ export function HeroSection({ onAuthOpen }: { onAuthOpen: () => void }) {
         <img
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/campus%20pic-UgwoAr2O9DGuRQ8EEC0bu6lfmuIIW2.png"
           alt="VVIET Campus aerial view"
-          className="h-full w-full object-cover transition-transform duration-[1500ms] ease-out will-change-transform"
+          className="h-full w-full object-cover brightness-110 contrast-105 saturate-110 transition-transform duration-[1500ms] ease-out will-change-transform"
           crossOrigin="anonymous"
           loading="eager"
           style={{
             transform: `scale(1.05) translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
           }}
         />
-        {/* Cinematic overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#3730a3]/15 via-transparent to-[#e11d73]/10" />
+        {/* Cinematic overlay - lighter to let the campus photo stand out */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/15 to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#3730a3]/8 via-transparent to-[#e11d73]/5" />
       </div>
 
       {/* Floating particles */}
@@ -135,7 +153,7 @@ export function HeroSection({ onAuthOpen }: { onAuthOpen: () => void }) {
             visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
-          <h2 className="institute-name text-balance text-base font-bold uppercase tracking-[0.18em] md:text-xl lg:text-2xl">
+          <h2 className="institute-name text-balance text-sm font-bold uppercase tracking-[0.18em] md:text-base lg:text-lg">
             <span className="bg-gradient-to-r from-[#f0c27f] via-[#ffffff] to-[#f0c27f] bg-clip-text text-transparent">
               Vidya Vikas Institute of Engineering & Technology
             </span>
@@ -149,7 +167,7 @@ export function HeroSection({ onAuthOpen }: { onAuthOpen: () => void }) {
           }`}
         >
           <div className="mx-auto mb-4 h-[2px] w-16 bg-gradient-to-r from-transparent via-white/60 to-transparent" />
-          <h1 className="text-balance text-4xl font-extrabold leading-[1.08] tracking-tight text-white drop-shadow-lg md:text-6xl lg:text-7xl">
+          <h1 className="text-balance text-3xl font-extrabold leading-[1.08] tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl">
             Alumni
             <span className="block bg-gradient-to-r from-white via-[#c7d2fe] to-white bg-clip-text text-transparent">
               Network

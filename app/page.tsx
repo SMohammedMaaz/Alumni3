@@ -47,16 +47,18 @@ export default function Home() {
       <AboutSection />
       <FeaturesSection />
 
+      {/* Public sections - visible to all */}
+      <SuccessStories />
+      <EventsSection />
+      <GallerySection />
+
       {/* Gated content - only visible after login */}
       {isLoggedIn ? (
         <>
           <DirectorySection />
           <MentorshipSection />
           <JobsSection />
-          <EventsSection />
-          <SuccessStories />
           <DonationsSection />
-          <GallerySection />
         </>
       ) : (
         <section className="relative z-10 bg-muted py-24">
@@ -69,7 +71,7 @@ export default function Home() {
             </h2>
             <p className="mb-8 mx-auto max-w-xl text-pretty text-muted-foreground leading-relaxed">
               Sign in or create your account to access the Alumni Directory, Mentorship Network, Job Portal,
-              Events, Success Stories, Gallery, and much more.
+              Donations, and much more.
             </p>
             <button
               onClick={handleAuthOpen}
